@@ -1,0 +1,65 @@
+<h1>Quiz</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Questions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{ quiz.id }}</td>
+      <td>{{ quiz.name }}</td>
+      <td>{{ quiz.date }}</td>
+      <td>{{ questions | count() }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<hr>
+
+<h2>Questions</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>#</th>
+      <th>Question</th>
+      <th>Answer</th>
+      <th>Image</th>
+      <th>Music</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for question in questions %}
+    <tr>
+      <td>{{ question.id }}</td>
+      <td>
+        {% if question.order %}
+          {{ question.order }}
+        {% endif %}
+      </td>
+      <td>{{ question.question }}</td>
+      <td>{{ question.answer }}</td>
+      <td>
+        {% if question.image %}
+          <img src="{{ url_for('static', filename='image/' + question.image ) }}">
+        {% endif %}
+      </td>
+      <td>
+        {% if question.music %}
+          <audio controls>
+            <source src="{{ url_for('static', filename='music/' + question.music ) }}" type="audio/mpeg">
+          </audio>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

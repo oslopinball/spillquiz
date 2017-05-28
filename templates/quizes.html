@@ -1,0 +1,21 @@
+<h1>Quiz</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for quiz in quizes %}
+    <tr>
+      <td>{{ quiz.id }}</td>
+      <td><a href="/quiz/{{ quiz.date }}">{{ quiz.name }}</a></td>
+      <td>{{ quiz.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

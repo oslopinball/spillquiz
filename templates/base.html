@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="SpillQuiz">
+    <meta name="author" content="oklien">
+    <link rel="icon"  type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>SpillQuiz</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/dd29440f95.js"></script>
+  </head>
+
+  <body>
+    {% block content %}
+    {% endblock content %}
+
+    <footer class="footer">
+      <hr>
+      <div class="footer navbar-bottom">
+      <center><p class="text-muted">Versjon 1.0 | Laget med <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> av oklien</p></center>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </body>
+</html>

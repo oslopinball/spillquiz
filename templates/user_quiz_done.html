@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> SpillQuiz</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/user/{{ user.username }}"><i class="fa fa-home" aria-hidden="true"></i> Hjem</a></li>
+        <li><a href="/user/{{ user.username }}/quiz/{{ quiz.date }}"><i class="fa fa-list" aria-hidden="true"></i> {{ quiz.name }}</a></li>
+        <li class="active"><a href="#"><i class="fa fa-question" aria-hidden="true"></i> Ferdig</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.username}}</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="jumbotron">
+    <h2><i class="fa fa-list" aria-hidden="true"></i> {{ quiz.name }}</h2>
+    <iframe src="https://giphy.com/embed/d2Z4rTi11c9LRita" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    <p>Ferdig! Hvordan tror du det gikk? :)</p>
+    <hr>
+    <a class="btn btn-lg btn-primary" role="button" href="/user/{{ user.username }}/quiz/{{ quiz.date }}"><i class="fa fa-trophy" aria-hidden="true"></i> Gå til resultat</a>
+  </div>
+
+</div>
+
+{% endblock content %}

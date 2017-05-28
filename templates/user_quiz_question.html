@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-gamepad" aria-hidden="true"></i> SpillQuiz</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/user/{{ user.username }}"><i class="fa fa-home" aria-hidden="true"></i> Hjem</a></li>
+        <li><a href="/user/{{ user.username }}/quiz/{{ quiz.date }}"><i class="fa fa-list" aria-hidden="true"></i> {{ quiz.name }}</a></li>
+        <li class="active"><a href="#"><i class="fa fa-question" aria-hidden="true"></i> {{ question.order }}</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.username}}</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ (question.order/questions)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (question.order/questions)*100 }}%;"></div>
+  </div>
+
+
+  <div class="jumbotron">
+
+  <h2><i class="fa fa-question" aria-hidden="true"></i> {{ question.order }}: {{ question.question }}</h2>
+
+    <p>
+      <span class="label label-info"><i class="fa fa-question" aria-hidden="true"></i> Spørsmål: {{ question.order }} / {{ questions }}</span>
+      <span class="label label-warning"><i class="fa fa-tag" aria-hidden="true"></i> Kategori: {{ question.category }}</span>
+
+      {% if question.image %}
+      <span class="label label-default"><i class="fa fa-picture-o" aria-hidden="true"></i> Bilde</span>
+      {% endif %}
+
+      {% if question.music %}
+      <span class="label label-default"><i class="fa fa-music" aria-hidden="true"></i> Musikk</span>
+      {% endif %}
+    </p>
+
+    {% if question.image %}
+      <img src="{{ url_for('static', filename='image/' + question.image ) }}" width="50%" heigh="50%">
+    {% endif %}
+
+    {% if question.music %}
+      <audio controls>
+        <source src="{{ url_for('static', filename='music/' + question.music ) }}" type="audio/mpeg">
+      </audio>
+    {% endif %}
+
+    <hr>
+
+    <form action="/answer" method="post" onkeypress="return event.keyCode != 13;">
+
+      <input type="hidden" name="user_id" value="{{ user.id}}">
+      <input type="hidden" name="quiz_id" value="{{ quiz.id}}">
+      <input type="hidden" name="question_id" value="{{ question.id}}">
+
+      {% if question.order != questions %}
+        <input type="hidden" name="url" value="/user/{{ user.username }}/quiz/{{ quiz.date }}/question/{{ question.order + 1 }}">
+      {% else %}
+        <input type="hidden" name="url" value="/user/{{ user.username }}/quiz/{{ quiz.date }}/question/done">
+      {% endif %}
+
+      <div class="form-group">
+        <label for="answer">Ditt svar:</label>
+        <input type="text" class="form-control" id="answer" name="answer" placeholder="Skriv inn ditt svar her..." autocomplete="off" autofocus onkeypress="if (event.keyCode == 13) { check(); };">
+      </div>
+
+      <div id="check">
+        <button type="button" class="btn btn-lg btn-success" onclick="check()"><i class="fa fa-check" aria-hidden="true"></i> Sjekk svaret!</button>
+      </div>
+
+      <!-- Leser du dette, så er du nok på vei til å jukse... Fy skamme seg! -->
+
+      <div id="correct" style="display:none;">
+        <div class="form-group has-success">
+          <label class="control-label" for="correctAnswer">Riktig svar er:</label>
+          <input type="text" class="form-control" id="correctAnswer" value="{{ question.answer }}" disabled>
+        </div>
+
+        <b>Svarte du riktig?</b> (Vær ærlig med deg selv..)
+
+        <div class="form-group">
+          <div class="radio">
+            <label>
+              <input type="radio" name="correct" value="0" onclick="next();"/>
+              <span class="label label-danger"><i class="fa fa-thumbs-down" aria-hidden="true"></i> Nei</span>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="correct" value="1" onclick="next();"/>
+              <span class="label label-success"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Ja</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="next" style="display:none;">
+        <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Neste spørsmål!</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+<script>
+
+function check() {
+   document.getElementById('correct').style.display = "block";
+   document.getElementById('check').style.display = "none";
+   document.getElementById('answer').readOnly = true;
+}
+
+function next() {
+   document.getElementById('next').style.display = "block";
+}
+</script>
+
+
+{% endblock content %}
